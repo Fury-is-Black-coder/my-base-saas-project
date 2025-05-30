@@ -7,3 +7,14 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+  mail:
+    host: mail63.mydevil.net
+    port: 587
+    username: no-reply@devcolibri.pl
+    password: 5eveTo51MlMgKUzQ-pCNS14
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
