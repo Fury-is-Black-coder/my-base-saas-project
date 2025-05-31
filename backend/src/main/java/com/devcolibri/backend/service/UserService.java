@@ -6,6 +6,9 @@ import com.devcolibri.backend.enums.UserRole;
 import com.devcolibri.backend.enums.UserStatus;
 import com.devcolibri.backend.repository.UserRepository;
 import com.devcolibri.backend.service.MailService;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +17,7 @@ import java.util.UUID;
 import java.util.Optional;
 
 @Service
-public class UserService {
+public class UserService implements UserDetailsService {
 
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder passwordEncoder;
@@ -59,5 +62,11 @@ public class UserService {
         user.setActivationCode(null);
         userRepository.save(user);
         return true;
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        return userRepository.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("Użytkownik nie znaleziony: " + email));
     }
 }
