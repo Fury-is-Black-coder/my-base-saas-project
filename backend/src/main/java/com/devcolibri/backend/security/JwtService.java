@@ -14,7 +14,7 @@ import java.util.function.Function;
 @Service
 public class JwtService {
 
-    private static final String SECRET_KEY = "your-512-bit-secret-your-512-bit-secret-your-512-bit-secret!";
+    private static final String SECRET_KEY = "utYCydFCvXyafE8ZOyTqIKPKAKQVECyq5mzYwcOKqHYh3MzWZBpAKy0dhDk9hSObW2jR8QPkjM+/LvJiOak7TA==";
 
     private Key getSigningKey() {
         return Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
@@ -31,9 +31,8 @@ public class JwtService {
 
     public String generateToken(User user) {
         Map<String, Object> claims = new HashMap<>();
-        claims.put("email", user.getEmail());
         claims.put("role", user.getRole());
-        claims.put("language", user.getLanguage());
+        claims.put("lang", user.getLanguage());
         return Jwts.builder()
                 .setClaims(claims)
                 .setSubject(user.getEmail())
